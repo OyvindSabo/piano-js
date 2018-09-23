@@ -2,61 +2,190 @@
 
 <script>
 var audioContext = new (window.AudioContext || window.webkitAudioContext)
-var gainNode = audioContext.createGain();
-gainNode.connect(audioContext.destination);
+var GAINNODE = audioContext.createGain();
+GAINNODE.connect(audioContext.destination);
 
-/* Instantiate the */
+/* Instantiate the oscillators */
 var C4 = audioContext.createOscillator();
+var C4sharp = audioContext.createOscillator();
 var D4 = audioContext.createOscillator();
 var E4 = audioContext.createOscillator();
 var F4 = audioContext.createOscillator();
 var G4 = audioContext.createOscillator();
 var A4 = audioContext.createOscillator();
+var A4sharp = audioContext.createOscillator();
 var B4 = audioContext.createOscillator();
+
+var C5 = audioContext.createOscillator();
+var D5 = audioContext.createOscillator();
+var D5sharp = audioContext.createOscillator();
+var E5 = audioContext.createOscillator();
+var F5 = audioContext.createOscillator();
+var F5sharp = audioContext.createOscillator();
+var G5 = audioContext.createOscillator();
+var G5sharp = audioContext.createOscillator();
+var A5 = audioContext.createOscillator();
+var A5sharp = audioContext.createOscillator();
+var B5 = audioContext.createOscillator();
+
+var C6 = audioContext.createOscillator();
+var C6sharp = audioContext.createOscillator();
+var D6 = audioContext.createOscillator();
 
 /* Set frequency */
 C4.frequency.value = 261.63;
+C4sharp.frequency.value = 277.18;
 D4.frequency.value = 293.66;
 E4.frequency.value = 329.63;
 F4.frequency.value = 349.23;
 G4.frequency.value = 392.00;
 A4.frequency.value = 440.00;
+A4sharp.frequency.value = 466.16;
 B4.frequency.value = 493.88;
+
+C5.frequency.value = 523.25;
+D5.frequency.value = 587.33;
+D5sharp.frequency.value = 622.25;
+E5.frequency.value = 659.25;
+F5.frequency.value = 698.46;
+F5sharp.frequency.value = 739.99;
+G5.frequency.value = 783.99;
+G5sharp.frequency.value = 830.61;
+A5.frequency.value = 880.00;
+A5sharp.frequency.value = 932.33;
+B5.frequency.value = 987.77;
+
+C6.frequency.value = 1046.50;
+C6sharp.frequency.value = 1108.73;
+D6.frequency.value = 1174.66;
 
 /* Set wave type */
 C4.type = "sine";
+C4sharp.type = "sine";
 D4.type = "sine";
 E4.type = "sine";
 F4.type = "sine";
 G4.type = "sine";
 A4.type = "sine";
+A4sharp.type = "sine";
 B4.type = "sine";
+
+C5.type = "sine";
+D5.type = "sine";
+D5sharp.type = "sine";
+E5.type = "sine";
+F5.type = "sine";
+F5sharp.type = "sine";
+G5.type = "sine";
+G5sharp.type = "sine";
+A5.type = "sine";
+A5sharp.type = "sine";
+B5.type = "sine";
+
+C6.type = "sine";
+C6sharp.type = "sine";
+D6.type = "sine";
 
 /* Start the oscilators */
 C4.start();
+C4sharp.start();
 D4.start();
 E4.start();
 F4.start();
 G4.start();
 A4.start();
+A4sharp.start();
 B4.start();
 
-/* Connect the oscilators to the gainNode */
-C4.connect(gainNode);
-D4.connect(gainNode);
-E4.connect(gainNode);
-F4.connect(gainNode);
-G4.connect(gainNode);
-A4.connect(gainNode);
-B4.connect(gainNode);
+C5.start();
+D5.start();
+D5sharp.start();
+E5.start();
+F5.start();
+F5sharp.start();
+G5.start();
+G5sharp.start();
+A5.start();
+A5sharp.start();
+B5.start();
 
-gainNode.gain.value = 0;
+C6.start();
+C6sharp.start();
+D6.start();
+
+/* Connect the oscilators to the GAINNODE */
+C4.connect(GAINNODE);
+C4sharp.connect(GAINNODE);
+D4.connect(GAINNODE);
+E4.connect(GAINNODE);
+F4.connect(GAINNODE);
+G4.connect(GAINNODE);
+A4.connect(GAINNODE);
+A4sharp.connect(GAINNODE);
+B4.connect(GAINNODE);
+
+C5.connect(GAINNODE);
+D5.connect(GAINNODE);
+D5sharp.connect(GAINNODE);
+E5.connect(GAINNODE);
+F5.connect(GAINNODE);
+F5sharp.connect(GAINNODE);
+G5.connect(GAINNODE);
+G5sharp.connect(GAINNODE);
+A5.connect(GAINNODE);
+A5sharp.connect(GAINNODE);
+B5.connect(GAINNODE);
+
+C6.connect(GAINNODE);
+C6sharp.connect(GAINNODE);
+D6.connect(GAINNODE);
+
+GAINNODE.gain.value = 0;
+
+/* Songs */
+let harryPotter = [[B4], [E5], [G5], [F5sharp], [E5], [B5], [A5], [F5sharp], [E5], [G5], [F5sharp], [D5sharp], [F5], [B4], [B4], [E5], [G5], [F5sharp], [E5], [B5], [D6], [C6sharp], [C6], [G5sharp], [C6], [B5], [A5sharp], [A4sharp], [G5], [E5], [G5], [B5], [G5], [B5], [G5], [C6], [B5], [A5sharp], [F5sharp], [G5], [B5], [A5sharp], [A4sharp], [B4], [B5], [G5], [B5], [G5], [B5], [G5], [D6], [C6sharp], [C6], [G5sharp], [C6], [B5], [A5sharp], [A4sharp], [G5], [E5]];
+
+let ALLNOTES = [C4, C4sharp, D4, E4, F4, G4, A4, A4sharp, B4, C5, D5, D5sharp, E5, F5, F5sharp, G5, G5sharp, A5, A5sharp, B5, C6, C6sharp, D6];
+let ACTIVESONG = harryPotter;
+let NOTEINDEX = 0;
+
+setActiveNotes = (allNotes, gainNode, activeSong, noteIndex) => {
+  for (let note of allNotes) {
+    note.disconnect();
+  }
+  for (let note of activeSong[noteIndex]) {
+    note.connect(gainNode);
+  }
+}
+
+const render = () => {
+  const width = 12;
+  const height = 3;
+  const noteList = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  let board = '<table>';
+  for (let y = 0; y < height; y++) { // For each octave/row
+    board += '<tr>';
+    for (let x = 0; x < width; x++) { // For each note/column
+      board += `<td id="${noteList[x] + (y+4)}" bgcolor="${'' + (999999-10*y*y)}" style="width:${100/width}vw;height:${100/height}vh"></td>`
+    }
+    board += '</tr>';
+  }
+  board += '</table>';
+  document.getElementById('board').innerHTML = board;
+}
 
 document.addEventListener('keypress', (event) => {
-  gainNode.gain.value = 1;
-  setTimeout(() => gainNode.gain.value = 0, 100);
+  GAINNODE.gain.value = 1;
+  setActiveNotes(ALLNOTES, GAINNODE, ACTIVESONG, NOTEINDEX);
+  //document.getElementById() TODO: Change color of the square which represents the key being played.
+  NOTEINDEX = NOTEINDEX === ACTIVESONG.length-1 ? 0 : NOTEINDEX + 1;
+  setTimeout(() => GAINNODE.gain.value = 0, 100);
 });
+
 </script>
 
-<body>
+<body onload="render()">
+  <div id="board">
+
+  </div>
 </body>
