@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<script>
+var audioContext = new (window.AudioContext || window.webkitAudioContext)
+var gainNode = audioContext.createGain();
+gainNode.connect(audioContext.destination);
+
+/* Instantiate the */
+var C4 = audioContext.createOscillator();
+var D4 = audioContext.createOscillator();
+var E4 = audioContext.createOscillator();
+var F4 = audioContext.createOscillator();
+var G4 = audioContext.createOscillator();
+var A4 = audioContext.createOscillator();
+var B4 = audioContext.createOscillator();
+
+/* Set frequency */
+C4.frequency.value = 261.63;
+D4.frequency.value = 293.66;
+E4.frequency.value = 329.63;
+F4.frequency.value = 349.23;
+G4.frequency.value = 392.00;
+A4.frequency.value = 440.00;
+B4.frequency.value = 493.88;
+
+/* Set wave type */
+C4.type = "sine";
+D4.type = "sine";
+E4.type = "sine";
+F4.type = "sine";
+G4.type = "sine";
+A4.type = "sine";
+B4.type = "sine";
+
+/* Start the oscilators */
+C4.start();
+D4.start();
+E4.start();
+F4.start();
+G4.start();
+A4.start();
+B4.start();
+
+/* Connect the oscilators to the gainNode */
+C4.connect(gainNode);
+D4.connect(gainNode);
+E4.connect(gainNode);
+F4.connect(gainNode);
+G4.connect(gainNode);
+A4.connect(gainNode);
+B4.connect(gainNode);
+
+gainNode.gain.value = 0;
+
+document.addEventListener('keypress', (event) => {
+  gainNode.gain.value = 1;
+  setTimeout(() => gainNode.gain.value = 0, 100);
+});
+</script>
+
+<body>
+</body>
